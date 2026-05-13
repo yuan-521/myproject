@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>郑州金水区蜜雪冰城（拉满100条）</title>
+    <style>
+        #map {
+            width: 100%;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <script src="https://webapi.amap.com/maps?v=1.4.15&key=01d72071adccc404b3d5d646b12f3ef2"></script>
+</head>
+<body>
+    <div id="map"></div>
+    <script>
+        window._AMapSecurityConfig = {
+            securityJsCode: "9d54cae0d92928cae6f2959de37f44b6"
+        };
+
+        var map = new AMap.Map("map", {
+            zoom: 13,
+            center: [113.67, 34.79] // 金水区中心
+        });
+
+        const webServiceKey = "427d63108e1f39f107ebfbeee6f9cd6e";
+        const keyword = "蜜雪冰城";
+        const city = "郑州";
+        let totalCount = 0; // 统计总门店数
+
+        async function fetchAllStores() {
+            // 直接拉满5页，100条
+            for (let page = 1; page <= 5; page++) {
+                const url = `https://restapi.amap.com/v3/place/text?keywords=${keyword}&city=${city}&key=${webServiceKey}&output=json&page=${page}&offset=20`;
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (data.status === "1" && data.pois) {
+                    console.log(`第${page}页：${data.pois.length}家`);
+                    data.pois.forEach(poi => {
+                        const [lng, lat] = poi.location.split(",");
+                        const marker = new AMap.Marker({
+                            position: [parseFloat(lng), parseFloat(lat)],
+                            title: poi.name,
+                            map: map
+                        });
+                        marker.on("click", () => {
+                            new AMap.InfoWindow({
+                                content: `<div style="padding:5px;"><strong>${poi.name}</strong><br>${poi.address}</div>`
+                            }).open(map, marker.getPosition());
+                        });
+                        totalCount++;
+                    });
+                } else {
+                    console.error(`第${page}页失败：`, data.info);
+                    break;
+                }
+            }
+            alert(`加载完成！共获取并标记了 ${totalCount} 家门店`);
+        }
+
+        fetchAllStores();
+    </script>
+</body>
+</html>
