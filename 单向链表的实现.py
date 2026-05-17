@@ -41,6 +41,24 @@ class SiginleLinkList:
             cur.next=node
         self._length += 1
 
+    def insert(self,new_date,pos):  #把新的数据插入到指定位置，
+        node = Node(new_date)
+        if pos <=0:   #插入链表头部
+            self.add(new_date)
+        elif pos >=self._length:   #pos 越界了,则插入到链表尾部
+            self.append(new_date)
+        else:  #插入链表中间
+             #找到要插入的位置
+            cur=self.head
+            while pos-1:
+                cur=cur.next
+                pos-=1
+            node.next=cur.next
+            cur.next=node
+            self._length+=1
+
+
+
     def to_list(self):  #把当前链表转换为列表
         res=[]
         cur=self.head
@@ -55,4 +73,6 @@ if __name__ == '__main__':
     sll.add(11)
     sll.append(44)
     sll.add(89)
+    sll.append(78)     #89,11,44,78
+    sll.insert(99,2)
     print(sll.to_list())
