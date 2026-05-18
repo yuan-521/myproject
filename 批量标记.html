@@ -11,21 +11,21 @@
             padding: 0;
         }
     </style>
-    <script src="https://webapi.amap.com/maps?v=1.4.15&key=01d72071adccc404b3d5d646b12f3ef2"></script>
+    <script src="<script src="https://webapi.amap.com/maps?v=1.4.15&key=YOUR_AMAP_WEB_KEY"></script>"></script>
 </head>
 <body>
     <div id="map"></div>
     <script>
         window._AMapSecurityConfig = {
-            securityJsCode: "9d54cae0d92928cae6f2959de37f44b6"
-        };
+  securityJsCode: "YOUR_AMAP_SECURITY_CODE"
+};
 
         var map = new AMap.Map("map", {
             zoom: 13,
             center: [113.67, 34.79] // 金水区中心
         });
 
-        const webServiceKey = "427d63108e1f39f107ebfbeee6f9cd6e";
+        const webServiceKey = "YOUR_AMAP_WEB_SERVICE_KEY";
         const keyword = "蜜雪冰城";
         const city = "郑州";
         let totalCount = 0; // 统计总门店数
