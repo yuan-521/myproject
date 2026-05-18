@@ -58,6 +58,29 @@ class SiginleLinkList:
             self._length+=1
 
 
+    def remove(self,date):
+        '找到要删除数据的前一个节点'
+        cur=self.head
+        pre =None
+        while cur:
+            if cur.date==date:  #找到了需要删除的节点
+                if pre:  #前一个节点
+                    pre.next=cur.next  #删除操作：前一个节点的下一个指向当前的下一个
+                else:   #要删除的节点就是头节点
+                    self.head=cur.next
+                self._length-=1
+                return True
+            else:
+             '没有找到，继续往下便利'
+            pre = cur
+            cur = cur.next
+        return False
+
+
+
+
+
+
 
     def to_list(self):  #把当前链表转换为列表
         res=[]
@@ -75,4 +98,5 @@ if __name__ == '__main__':
     sll.add(89)
     sll.append(78)     #89,11,44,78
     sll.insert(99,2)
+    sll.remove(44)
     print(sll.to_list())
