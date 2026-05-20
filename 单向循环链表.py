@@ -48,15 +48,16 @@ class SingleCycleLinkList:
         node = Node(new_date)
        # node.next = None  最后一个节点next 默认指向空，可去除
         if self.is_empty():  #原来的链表为空
-            self.head=node
+            self.add(new_date)
         else:         #链表不为空，从头节点依次往下找，直到最后节点
             cur=self.head
-            while cur.next:
+            while cur.next !=self.head:
                 cur=cur.next  #cur成为最后一个节点
-            cur.next=node
+            cur.next=node    #尾节点指向插入的真正尾节点
+            node.next=self.head
         self._length += 1
 
-    def insert(self,new_date,pos):  #把新的数据插入到指定位置，
+    def insert(self,new_date,pos):  #把新的数据插入到指定链表的位置，
         node = Node(new_date)
         if pos <=0:   #插入链表头部
             self.add(new_date)
@@ -64,6 +65,7 @@ class SingleCycleLinkList:
             self.append(new_date)
         else:  #插入链表中间
              #找到要插入的位置
+            node=Node(new_date)
             cur=self.head
             while pos-1:
                 cur=cur.next
