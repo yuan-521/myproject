@@ -1,5 +1,6 @@
 
 
+
 class Node:
     '节点类:两部分组成，元素区域，指针区域'
     def __init__(self,date,next_Node=None):
@@ -102,14 +103,17 @@ class SingleCycleLinkList:
             cur = cur.next
         return False
 
-   
+
 
 
 
     def to_list(self):  #把当前链表转换为列表
         res=[]
         cur=self.head
-        while cur:
+        flags=True
+        while cur and flags:
+            if cur.next==self.head:
+                flags=False
             res.append(cur.date)
             cur=cur.next
         return res
@@ -127,9 +131,14 @@ class SingleCycleLinkList:
 
 
     def search(self,date):
+        if self.is_empty():
+            return False
+        flags=True
         cur=self.head  #xxxxxxxxxxxxxxxwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-        while cur:  #只要节点还存在，就继续遍历
-            if cur.date==date:
+        while cur and flags:  #只要节点还存在，就继续遍历
+            if cur.next==self.head:
+                flags=False
+            if cur.date==date:     #如果节点的值等于要判断的值
                 return  True
             cur=cur.next
         return  False
@@ -140,11 +149,11 @@ if __name__ == '__main__':
     sll=SingleCycleLinkList()
     sll.add(11)
     sll.append(44)
-    sll.add(89)
-    sll.append(78)     #89,11,44,78
+    sll.append(78)
+    sll.add(89)     #89,11,44,78
+
+    print(sll.to_list())
     sll.insert(99,2)
-    sll.remove(44)
     #print(sll.remove_pos(1))
-    print(sll.search(11))
-    print(sll.modify(1,1222))
+    print(sll.search(33))
     print(sll.to_list())
